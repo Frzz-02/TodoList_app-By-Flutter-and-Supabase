@@ -17,7 +17,7 @@ class TitleWidget extends StatelessWidget {
             SizedBox(width: 0,),
 
 
-            Icon(Icons.home),
+            Icon(Icons.home, color: Color.fromARGB(255, 255, 255, 255),),
 
 
             Text(

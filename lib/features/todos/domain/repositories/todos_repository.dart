@@ -8,6 +8,7 @@ import 'package:todolist_app/features/todos/domain/entities/todos.dart';
 abstract interface class TodosRepository {
   Future<List<Todos>> getTodos();
   Future<void> addTodo(Todos todo);
+  Future<void> updateDataTodos(Todos data);
   Future<void> delTodo(String id);
   Future<void> toggleTodoStatus(String id, bool isCheked);
 }

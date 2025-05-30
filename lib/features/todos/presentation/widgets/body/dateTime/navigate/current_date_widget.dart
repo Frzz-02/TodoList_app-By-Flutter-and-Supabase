@@ -13,25 +13,26 @@ class CurrentDateWidget extends StatefulWidget {
 class _CurrentDateWidgetState extends State<CurrentDateWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
       // margin: const EdgeInsets.only(bottom: 40),
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow:  [
           BoxShadow(
-              color: Color.fromARGB(168, 0, 0, 0),
+              color: (widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1]) ? Colors.transparent : Color.fromARGB(168, 0, 0, 0),
               offset: Offset(3, 3),
               blurRadius: 3)
         ],
-        color: const Color.fromARGB(255, 224, 236, 243),
+        color: (widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1]) ? const Color.fromARGB(204, 48, 139, 230) : const Color.fromARGB(255, 224, 236, 243),
         borderRadius: BorderRadius.circular(7),
         border: Border.all(
-          color: Colors.black,
+          color: (widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1]) ? const Color.fromARGB(155, 0, 0, 0) : Colors.black,
           width: 0,
         ),
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(11, 0, 0, 0),
+          backgroundColor: const Color.fromARGB(10, 255, 255, 255),
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
@@ -41,11 +42,12 @@ class _CurrentDateWidgetState extends State<CurrentDateWidget> {
         ),
         onPressed: widget.onPress,
         child:  Text(
-          "${(widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1])} yang ada di button state : ${widget.formatedDateFromButtonBlocS[1]}, tanggal sekarang : ${widget.currentFormattedDate}",
-          style: const TextStyle(
+          "Today",
+          //  yang ada di button state : ${widget.formatedDateFromButtonBlocS[1]}, tanggal sekarang : ${widget.currentFormattedDate}",
+          style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.w400,
-              color: Colors.black),
+              fontWeight: (widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1]) ? FontWeight.w600 : FontWeight.w400,
+              color: (widget.currentFormattedDate == widget.formatedDateFromButtonBlocS[1]) ? Colors.white : Colors.black),
         ),
       ),
     );

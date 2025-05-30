@@ -5,7 +5,10 @@ sealed class TodoState {}
 
 class InitialTodoState extends TodoState {}
 
-class TodoLoading extends TodoState {}
+class TodoLoading extends TodoState {
+  final String information;
+  TodoLoading({required this.information});
+}
 
 class Successful extends TodoState {
   final String message;

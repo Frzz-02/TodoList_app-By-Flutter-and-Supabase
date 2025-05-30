@@ -1,3 +1,5 @@
+// import 'package:uuid/uuid.dart';
+
 import '../../domain/entities/todos.dart';
 
 class TodosModel extends Todos {
@@ -11,6 +13,7 @@ class TodosModel extends Todos {
     required super.description,
     required super.isChecked,
     required super.createdAt,
+    required super.deadline,
   });
 
 
@@ -26,6 +29,7 @@ class TodosModel extends Todos {
       description: map['description'] as String,
       isChecked: map['is_checked'] as bool,
       createdAt: DateTime.parse(map['created_at'] as String),
+      deadline: DateTime.parse(map['deadline'] as String),
     );
   }
 
@@ -33,12 +37,14 @@ class TodosModel extends Todos {
 
 
 // ini untuk mengonversi objek model ke dalam bentuk map untuk dapat disimpan ke dalam database
-  Map<String, dynamic> tomap() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
       'description': description,
       'is_checked': isChecked,
+      'created_at': createdAt.toUtc().toIso8601String(),
+      'deadline': deadline.toUtc().toIso8601String(),
     };
   }
 }

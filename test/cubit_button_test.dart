@@ -26,7 +26,7 @@ void main() async {
               
               
               act: (bloc) { 
-                bloc.onClickBt(DateTime.now().day - 1, DateTime.now().day.toString(), DateTime.now().month.toString()) ;
+                // bloc.onClickBt(DateTime.now().day - 1, DateTime.now().day.toString(), DateTime.now().month.toString()) ;
                 // print("\n\n${(bloc.state as CurrentDates).date()}");
                 // bloc.nextMonth(ss);
                 // bloc.nextMonth();

@@ -2,7 +2,7 @@
 class Todos {
   final String id, title, description;
   final bool isChecked;
-  final DateTime createdAt;
+  final DateTime createdAt, deadline;
 
   const Todos({
     required this.id,
@@ -10,5 +10,6 @@ class Todos {
     required this.description,
     required this.isChecked,
     required this.createdAt,
+    required this.deadline
   });
 }

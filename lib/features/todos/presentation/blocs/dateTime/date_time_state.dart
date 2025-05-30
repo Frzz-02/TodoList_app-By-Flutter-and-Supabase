@@ -5,19 +5,22 @@ sealed class DateTimeState {} //sealed membuat class ini tidak bisa di extend di
 
 class CurrentDates extends DateTimeState {
   final List<Map<String, dynamic>> selectedDates;
-  final String dateTime;
+  // final String dateTime;
   final String month;
-  CurrentDates({required this.selectedDates, required this.month, this.dateTime = " "});
+  CurrentDates({required this.selectedDates, 
+                              required this.month, 
+                                      // this.dateTime = " "
+                                      });
 
 
 
-  CurrentDates copyWith({
-    List<Map<String,dynamic>>? selectedDates,
-    String? month,
-    String? dateTime
-  }){
-    return CurrentDates(selectedDates: selectedDates ?? this.selectedDates, month: month ?? this.month, dateTime: dateTime ?? this.dateTime);
-  }
+  // CurrentDates copyWith({
+  //   List<Map<String,dynamic>>? selectedDates,
+  //   String? month,
+  //   String? dateTime
+  // }){
+  //   return CurrentDates(selectedDates: selectedDates ?? this.selectedDates, month: month ?? this.month, dateTime: dateTime ?? this.dateTime);
+  // }
 
 
 

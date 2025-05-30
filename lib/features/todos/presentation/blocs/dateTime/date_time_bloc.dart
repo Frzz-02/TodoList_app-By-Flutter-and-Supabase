@@ -10,7 +10,7 @@ class DateTimeBloc extends Cubit<DateTimeState> {
           CurrentDates( selectedDates: [], month: "" )
         ){ 
           //inisialisasi selectedDates ketika value dari dates sudah ada
-          selectedDates = dates.where((date) => date[months[DateTime.now().month - 1]] != null).toList();
+          selectedDates = dates.where((date) => date[months[DateTime.now().month - 1]] != null).toList(); // example : may
           emit(CurrentDates(selectedDates: selectedDates, month: months[DateTime.now().month - 1]));
         }
 
@@ -25,14 +25,12 @@ class DateTimeBloc extends Cubit<DateTimeState> {
 
 
 
-  int monthIndex = DateTime.now().month - 1;
+  int monthIndex = DateTime.now().month - 1; //5 - 1 = 4, may
   late List<Map<String, dynamic>> selectedDates;
 
 
-int crIndex(){
-  return monthIndex;
-}
-
+int crSelectedMonthIndex() => monthIndex;
+int crMonthIndexNow() => DateTime.now().month - 1;
 
 
   void prevMonth() {
@@ -55,10 +53,10 @@ int crIndex(){
 
 
 void moveToCurrentMonth(int selectMonth){
-  monthIndex = selectMonth ;
+  monthIndex = selectMonth - 1;
   selectedDates.clear();
-  selectedDates.addAll(dates.where((date) => date[months[selectMonth]] != null).toList());
-  emit(CurrentDates(selectedDates: selectedDates, month: months[selectMonth]));
+  selectedDates.addAll(dates.where((date) => date[months[monthIndex]] != null).toList());
+  emit(CurrentDates(selectedDates: selectedDates, month: months[monthIndex]));
 }
 
 
@@ -70,8 +68,7 @@ void moveToCurrentMonth(int selectMonth){
       monthIndex++;
     }
     selectedDates.clear();
-    selectedDates.addAll(
-        dates.where((date) => date[months[monthIndex]] != null).toList());
+    selectedDates.addAll(dates.where((date) => date[months[monthIndex]] != null).toList());
     emit(CurrentDates(selectedDates: selectedDates, month: months[monthIndex]));
   }
 }

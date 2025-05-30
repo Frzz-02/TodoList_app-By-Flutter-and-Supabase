@@ -5,6 +5,7 @@ import 'package:todolist_app/features/todos/domain/entities/todos.dart';
 import 'package:todolist_app/features/todos/domain/use_cases/add_todos_use_case.dart';
 import 'package:todolist_app/features/todos/domain/use_cases/del_todos_use_case.dart';
 import 'package:todolist_app/features/todos/domain/use_cases/get_todos.dart';
+import 'package:todolist_app/features/todos/domain/use_cases/update_all_data_todos_use_case.dart';
 import 'package:todolist_app/features/todos/domain/use_cases/update_todos_use_case.dart';
 
 part 'todo_state.dart';
@@ -13,35 +14,43 @@ class TodoBloc extends Cubit<TodoState> {
   final TodosRepositoryImpl repository;
   TodoBloc({required this.repository}) : super(InitialTodoState());
 
-  late final GetTodos getTodos;
-  late final AddTodosUseCase addTodos;
-  late final DelTodosUseCase delTodos;
-  late final UpdateTodosUseCase updateTodos;
+  // late final GetTodos getTodos;
+  // late final AddTodosUseCase addTodos;
+  // late final DelTodosUseCase delTodos;
+  // late final UpdateTodosUseCase updateTodos;
 
 
   void getAllTodos() async {
-    emit(TodoLoading());
+    emit(TodoLoading(information: "fetch"));
 
     try {
-      getTodos = GetTodos(repository : repository);
+      
+      final getTodos = GetTodos(repository : repository);
       final todos = await getTodos();
       emit(TodoLoaded(data: todos));
+      
     } catch (e) {
+
       emit(TodoError(e.toString()));
+      
     }
   }
+
+  
 
 
 
 
 
   void addTodo(Todos todo) async {
-    emit(TodoLoading());
+    emit(TodoLoading(information: "addTodo"));
 
     try {
-      addTodos = AddTodosUseCase(repository: repository);
+      final addTodos = AddTodosUseCase(repository: repository);
       await addTodos(todo);
-      emit(Successful( message : "Data berhasil ditambahkan"));
+      // print('success');
+      getAllTodos();
+      // emit(Successful( message : "Data berhasil ditambahkan"));
       
     } catch (e) {
       emit(TodoError(e.toString()));
@@ -53,12 +62,15 @@ class TodoBloc extends Cubit<TodoState> {
 
 
   void delTodo(String id, String title) async {
-    emit(TodoLoading());
+    // emit(TodoLoading(information: "delete"));
 
     try {
-      delTodos = DelTodosUseCase(repository: repository);
+      final delTodos = DelTodosUseCase(repository: repository);
       await delTodos(id);
+      // refreshAllTodos();
       emit(Successful(message: "Data $title berhasil dihapus"));
+      await Future.delayed(const Duration(seconds: 3));
+      refreshAllTodos();
     } catch (e) {
       emit(TodoError(e.toString()));
     }
@@ -69,17 +81,66 @@ class TodoBloc extends Cubit<TodoState> {
 
 
 
-  void updateTodo(String id, bool isChecked) async {
-    emit(TodoLoading());
+
+
+
+
+
+
+
+
+  void refreshAllTodos() async {
+    try {
+      final getTodos = GetTodos(repository : repository);
+      final todos = await getTodos();
+      emit(TodoLoaded(data: todos));
+    } catch (e) {
+      emit(TodoError(e.toString()));
+    }
+  }
+
+
+  void updateTodosStatus(String id, bool isChecked) async {
+    emit(TodoLoading(information: "update:${id}"));
 
     try {
-      updateTodos = UpdateTodosUseCase(repository: repository);
+
+      final updateTodos = UpdateTodosUseCase(repository: repository);
       await updateTodos(id, isChecked);
+      refreshAllTodos();     
       emit(Successful( message : "Data berhasil diperbarui"));
+     
+      // await Future.delayed(const Duration(seconds: 3));
+      // refreshAllTodos();      
     } catch (e) {
       emit(TodoError(e.toString()));
     }
   }
+
+  
+  
+  
+  void updateTodosData(Todos data) async {
+    print('\n\n\nsedang memproses update todos');
+    emit(TodoLoading(information: "fetch"));
+
+    try {
+      print(data.id + " \n" + data.title + " \n" + data.description + " \n" + data.isChecked.toString() + " \n" + data.createdAt.toString() + " \n" + data.deadline.toString());
+      final updateTodos = UpdateAllDataTodosUseCase(repository: repository);
+      await updateTodos(data);
+      print('sudah update');
+      refreshAllTodos();     
+      emit(Successful( message : "Data berhasil diperbarui"));
+      // await Future.delayed(const Duration(seconds: 3));
+      // refreshAllTodos();      
+    } catch (e) {
+      emit(TodoError(e.toString()));
+    }
+  }
+
+
+
+
 
 
 }

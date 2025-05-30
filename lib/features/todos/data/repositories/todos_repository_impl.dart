@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todolist_app/features/todos/data/models/todos_model.dart';
 
@@ -49,8 +50,10 @@ class TodosRepositoryImpl implements TodosRepository {
                 title: todo.title,
                 description: todo.description,
                 isChecked: todo.isChecked,
-                createdAt: DateTime.now())
-            .tomap()
+                createdAt: DateTime.now(),
+                deadline: todo.deadline
+                )
+            .toMap()
         // pada fungsi addTodo, kita disini menggunakan fungsi toMap() yang sebelumnya telah didefinisikan pada class TodosModel
         // hal ini dilakukan untuk mengonversi objek pada TodosModel ke dalam bentuk map agar bisa disimpan ke dalam database di supabase
         // karena pada saat kita fetch data, supabase selalu memberikan datanya dalam bentuk map, dan begitu juga sebeliknya, kita pada saat megirim data, kita juga harus mengubah data yang dalam bentuk objek ke map
@@ -65,5 +68,20 @@ class TodosRepositoryImpl implements TodosRepository {
   @override
   Future<void> toggleTodoStatus(String id, bool isCheked) async {
     await client.from('todos').update({'is_checked': isCheked}).eq('id', id);
+  }
+
+  
+  @override
+  Future<void> updateDataTodos(Todos data) async {
+    print("REPOSITORY: updateTodos.data() terpanggil\n\n");
+    print(data.id + " \n" + data.title + " \n" + data.description + " \n" + data.isChecked.toString() + " \n" + data.createdAt.toString() + " \n" + data.deadline.toString());
+    final response = await client.from('todos')
+                .update({
+                    'title': data.title,
+                    'description': data.description,
+                    'deadline': data.deadline.toUtc().toIso8601String(),
+                  }).eq('id', data.id).select();
+
+    print('${response}');                  
   }
 }

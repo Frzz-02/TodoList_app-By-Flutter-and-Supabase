@@ -8,4 +8,5 @@ class UpdateTodosUseCase {
   Future<void> call(String id, bool isChecked) async {
     await repository.toggleTodoStatus(id, isChecked);
   }
+
 }
