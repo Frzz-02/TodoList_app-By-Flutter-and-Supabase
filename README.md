@@ -83,13 +83,16 @@ lib/features/todos/
 
 
 - Home / Todo List
-	- `![Home](assets/screenshots/home.png)`
+
+	|  |  |
+	| --- | --- |
+	| ![Add Todo](assets/screenshots/home.png) | ![Add Todo](assets/screenshots/home%20(empty%20state).png) |
+
 - Tambah Todo
-	- `![Add Todo](assets/screenshots/add_todo.png)`
+	![Add Todo](assets/screenshots/add_todo.png)
 - Edit / Update Todo
-	- `![Edit Todo](assets/screenshots/edit_todo.png)`
-- Navigasi Tanggal
-	- `![Date Navigation](assets/screenshots/date_navigation.png)`
+	![Edit Todo](assets/screenshots/edit_todo.png)
+
 
 ---
 
