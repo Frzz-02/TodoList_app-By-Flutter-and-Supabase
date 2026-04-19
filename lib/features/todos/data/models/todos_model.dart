@@ -24,7 +24,7 @@ class TodosModel extends Todos {
     return TodosModel( 
       /*ini artinya kita memanggil kembali constructor TodosModel dan mengisi parameter-parameter yang ada 
         di constructor tersebut untuk memberikan nilai pada setiap field yang ada di class TodosModel*/
-      id: map['id'] as String, //baris ini artinya kita memberi tahu dart bahwa map['id'] adalah String (bukan mengkonversi)
+      id: map['id'].toString(), // aman untuk id bertipe String ataupun int/bigint
       title: map['title'] as String,
       description: map['description'] as String,
       isChecked: map['is_checked'] as bool,

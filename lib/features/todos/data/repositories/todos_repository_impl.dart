@@ -45,7 +45,7 @@ class TodosRepositoryImpl implements TodosRepository {
   Future<void> addTodo(Todos todo) async {
     // kita menggunakan uuid.v4() untuk membuat id yang unik (perlu didaftarkan ke dependency terlebih dahulu)
     // const uuid = Uuid();
-    await client.from('todos').insert(TodosModel(
+    final payload = TodosModel(
                 id: todo.id,
                 title: todo.title,
                 description: todo.description,
@@ -53,7 +53,12 @@ class TodosRepositoryImpl implements TodosRepository {
                 createdAt: DateTime.now(),
                 deadline: todo.deadline
                 )
-            .toMap()
+            .toMap();
+
+    // Jika kolom id di database bertipe bigint/identity, biarkan DB yang generate id.
+    payload.remove('id');
+
+    await client.from('todos').insert(payload
         // pada fungsi addTodo, kita disini menggunakan fungsi toMap() yang sebelumnya telah didefinisikan pada class TodosModel
         // hal ini dilakukan untuk mengonversi objek pada TodosModel ke dalam bentuk map agar bisa disimpan ke dalam database di supabase
         // karena pada saat kita fetch data, supabase selalu memberikan datanya dalam bentuk map, dan begitu juga sebeliknya, kita pada saat megirim data, kita juga harus mengubah data yang dalam bentuk objek ke map
